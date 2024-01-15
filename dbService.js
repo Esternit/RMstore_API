@@ -33,12 +33,39 @@ class DbService {
                 })
             });
 
-            console.log(response);
             return response;
 
         } catch (error) {
             console.log(error);
         }
+    }
+
+    async getDataById(id){
+        try{
+            const response = await new Promise((resolve, reject) => {
+                const query = "SELECT * FROM products WHERE id = ?;";
+    
+                connection.query(query, [id], (err, results) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(results);
+                })
+            });
+            const secondResponse = await new Promise((resolve, reject) => {
+                const query = "SELECT * FROM sizing WHERE product_id = ?;";
+    
+                connection.query(query, [id], (err, results) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(results);
+                })
+            });
+            return {
+                base : response,
+                sizes : secondResponse
+            };
+        } catch(error){
+            console.log(error);
+        }
+
     }
 }
 

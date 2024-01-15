@@ -10,8 +10,15 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended : false }));
 
-app.post('/insert', (request, response) => {
+app.post('/getById', (request, response) => {
+    
+    const  id  = request.body['productId'];
+    const db = dbService.getDbServiceInstance();
 
+    const result = db.getDataById(id);
+    result
+    .then(data => response.json({ data : data}))
+    .catch(err => console.log(err));
 });
 
 app.get('/getAll', (request, response) => {
