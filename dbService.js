@@ -67,6 +67,23 @@ class DbService {
         }
 
     }
+
+    async searchByName(name,limit,page) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "SELECT * FROM products WHERE title LIKE CONCAT('%', ? , '%') LIMIT ?,?;";
+
+                connection.query(query, [name,(page-1)*limit,limit], (err, results) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(results);
+                })
+            });
+
+            return response;
+        } catch (error) {
+            console.log(error);
+        }
+    }
 }
 
 module.exports = DbService;
