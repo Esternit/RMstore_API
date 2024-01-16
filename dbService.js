@@ -22,12 +22,12 @@ class DbService {
         return instance ? instance : new DbService();
     }
 
-    async getAllData(){
+    async getAllData(limit,page){
         try {
             const response = await new Promise((resolve, reject) => {
-                const query = "SELECT * FROM products;";
+                const query = "SELECT * FROM products LIMIT ?,?;";
 
-                connection.query(query, (err, results) => {
+                connection.query(query, [(page-1)*limit,limit], (err, results) => {
                     if (err) reject(new Error(err.message));
                     resolve(results);
                 })
