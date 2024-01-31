@@ -1,7 +1,11 @@
 const mysql = require('mysql');
 const dotenv = require('dotenv');
+const fs = require("fs");
 let instance = null;
 dotenv.config();
+
+const data = JSON.parse(fs.readFileSync('data.json'));
+
 
 const connection = mysql.createConnection({
     host: process.env.HOSTNAMING,
@@ -29,6 +33,9 @@ class DbService {
 
                 connection.query(query, [(page-1)*limit,limit], (err, results) => {
                     if (err) reject(new Error(err.message));
+                    for(let i = 0; i < results.length; i++){
+                        results[i]["start_price"] =  Math.round((results[i]["start_price"]*data["exchange"]+1900)*1.02 + 900);
+                    }
                     resolve(results);
                 })
             });
@@ -52,9 +59,12 @@ class DbService {
             });
             const secondResponse = await new Promise((resolve, reject) => {
                 const query = "SELECT * FROM sizing WHERE product_id = ?;";
-    
+                
                 connection.query(query, [id], (err, results) => {
                     if (err) reject(new Error(err.message));
+                    for(let i = 0; i < results.length; i++){
+                        results[i]["price"] =  Math.round((results[i]["price"]*data["exchange"]+1900)*1.02 + 900);
+                    }
                     resolve(results);
                 })
             });
@@ -75,6 +85,9 @@ class DbService {
 
                 connection.query(query, [name,(page-1)*limit,limit], (err, results) => {
                     if (err) reject(new Error(err.message));
+                    for(let i = 0; i < results.length; i++){
+                        results[i]["start_price"] =  Math.round((results[i]["start_price"]*data["exchange"]+1900)*1.02 + 900);
+                    }
                     resolve(results);
                 })
             });

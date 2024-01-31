@@ -22,6 +22,7 @@ app.post('/getById', (request, response) => {
 });
 
 app.post('/getAll', (request, response) => {
+
     const limit = request.body['limiter'];
     const page = request.body['paging'];
 
@@ -37,9 +38,7 @@ app.post('/search/:name', (request, response) => {
     const limit = request.body['limiter'];
     const page = request.body['paging'];
     const db = dbService.getDbServiceInstance();
-    console.log(limit,page);
     const result = db.searchByName(name,limit,page);
-    console.log(result);
     result
     .then(data => response.json({data : data}))
     .catch(err => console.log(err));
