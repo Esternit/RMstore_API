@@ -21,6 +21,18 @@ app.post('/getById', (request, response) => {
     .catch(err => console.log(err));
 });
 
+app.post('/getAllDataFromStart', (request, response) => {
+    
+    const limit = request.body['limiter'];
+    const page = request.body['paging'];
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.getAllDataFromStart(limit,page);
+    result
+    .then(data => response.json({ data : data}))
+    .catch(err => console.log(err));
+});
+
 app.post('/getAll', (request, response) => {
 
     const limit = request.body['limiter'];

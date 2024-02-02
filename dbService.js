@@ -97,6 +97,28 @@ class DbService {
             console.log(error);
         }
     }
+
+    async getAllDataFromStart(limit,page){
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "SELECT * FROM products LIMIT ?;";
+
+                connection.query(query, [limit*page], (err, results) => {
+                    if (err) reject(new Error(err.message));
+                    for(let i = 0; i < results.length; i++){
+                        results[i]["start_price"] =  Math.round((results[i]["start_price"]*data["exchange"]+1900)*1.02 + 900);
+                    }
+                    resolve(results);
+                })
+            });
+
+            return response;
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
 }
 
 module.exports = DbService;
