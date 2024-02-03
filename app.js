@@ -56,4 +56,15 @@ app.post('/search/:name', (request, response) => {
     .catch(err => console.log(err));
 })
 
+app.post('/searchDataFromStart/:name', (request, response) => {
+    const { name } = request.params;
+    const limit = request.body['limiter'];
+    const page = request.body['paging'];
+    const db = dbService.getDbServiceInstance();
+    const result = db.searchByNameFromStart(name,limit,page);
+    result
+    .then(data => response.json({data : data}))
+    .catch(err => console.log(err));
+})
+
 app.listen(process.env.PORT, () => console.log('app is running'));
