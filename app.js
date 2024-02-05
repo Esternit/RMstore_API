@@ -34,7 +34,6 @@ app.post('/getAllDataFromStart', (request, response) => {
 });
 
 app.post('/getAll', (request, response) => {
-
     const limit = request.body['limiter'];
     const page = request.body['paging'];
 

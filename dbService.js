@@ -7,7 +7,7 @@ dotenv.config();
 const data = JSON.parse(fs.readFileSync('data.json'));
 
 
-const connection = mysql.createConnection({
+const connection = mysql.createPool({
     host: process.env.HOSTNAMING,
     user: process.env.USERNAMING,
     password: process.env.PASSWORDNAMING,
@@ -15,7 +15,7 @@ const connection = mysql.createConnection({
     port: process.env.DB_PORT
 });
 
-connection.connect((err) => {
+connection.getConnection((err) => {
     if (err){
         console.log(err);
     }
