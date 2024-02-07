@@ -68,9 +68,18 @@ class DbService {
                     resolve(results);
                 })
             });
+            const thirdResponse = await new Promise((resolve, reject) => {
+                const query = "SELECT * FROM images WHERE product_id = ?;";
+                
+                connection.query(query, [id], (err, results) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(results);
+                })
+            });
             return {
                 base : response,
-                sizes : secondResponse
+                sizes : secondResponse,
+                images: thirdResponse
             };
         } catch(error){
             console.log(error);
