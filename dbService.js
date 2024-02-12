@@ -50,7 +50,7 @@ class DbService {
     async getDataById(id){
         try{
             const response = await new Promise((resolve, reject) => {
-                const query = "SELECT * FROM products WHERE id = ?;";
+                const query = "SELECT * FROM products WHERE spuId = ?;";
     
                 connection.query(query, [id], (err, results) => {
                     if (err) reject(new Error(err.message));
