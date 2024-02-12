@@ -36,6 +36,7 @@ class DbService {
                     for(let i = 0; i < results.length; i++){
                         results[i]["start_price"] =  Math.round((results[i]["start_price"]*data["exchange"]+1900)*1.02 + 900);
                     }
+                    console.log(results);
                     resolve(results);
                 })
             });
@@ -51,12 +52,13 @@ class DbService {
         try{
             const response = await new Promise((resolve, reject) => {
                 const query = "SELECT * FROM products WHERE spuId = ?;";
-    
+                console.log(id);
                 connection.query(query, [id], (err, results) => {
                     if (err) reject(new Error(err.message));
                     for(let i = 0; i < results.length; i++){
                         results[i]["start_price"] =  Math.round((results[i]["start_price"]*data["exchange"]+1900)*1.02 + 900);
                     }
+                    
                     resolve(results);
                 })
             });
@@ -68,6 +70,7 @@ class DbService {
                     for(let i = 0; i < results.length; i++){
                         results[i]["price"] =  Math.round((results[i]["price"]*data["exchange"]+1900)*1.02 + 900);
                     }
+                    console.log(results);
                     resolve(results);
                 })
             });
