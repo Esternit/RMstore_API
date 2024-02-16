@@ -25,8 +25,7 @@ var ex;
 connection.query(
     'SELECT * FROM exchange',
     function(err, results, fields) {
-      ex = results[0]["exchange_rate"];
-      console.log(ex); // results contains rows returned by server// fields contains extra meta data about results, if available
+      ex = results[0]["exchange_rate"]; // results contains rows returned by server// fields contains extra meta data about results, if available
     }
 );
 
@@ -40,8 +39,6 @@ class DbService {
         try {
             const response = await new Promise((resolve, reject) => {
                 const query = "SELECT * FROM products LIMIT ?,?;";
-                console.log(ex);
-                console.log(typeof(ex));
                 connection.query(query, [(page-1)*limit,limit], (err, results) => {
                     if (err) reject(new Error(err.message));
                     for(let i = 0; i < results.length; i++){
@@ -66,7 +63,7 @@ class DbService {
                 connection.query(query, [id], (err, results) => {
                     if (err) reject(new Error(err.message));
                     for(let i = 0; i < results.length; i++){
-                        results[i]["start_price"] =  Math.round((results[i]["start_price"]*data["exchange"]+1900)*1.02 + 900);
+                        results[i]["start_price"] =  Math.round((results[i]["start_price"]*ex+1900)*1.02 + 900);
                     }
                     
                     resolve(results);
@@ -78,7 +75,7 @@ class DbService {
                 connection.query(query, [id], (err, results) => {
                     if (err) reject(new Error(err.message));
                     for(let i = 0; i < results.length; i++){
-                        results[i]["price"] =  Math.round((results[i]["price"]*data["exchange"]+1900)*1.02 + 900);
+                        results[i]["price"] =  Math.round((results[i]["price"]*ex+1900)*1.02 + 900);
                     }
                     resolve(results);
                 })
@@ -110,7 +107,7 @@ class DbService {
                 connection.query(query, [name,(page-1)*limit,limit], (err, results) => {
                     if (err) reject(new Error(err.message));
                     for(let i = 0; i < results.length; i++){
-                        results[i]["start_price"] =  Math.round((results[i]["start_price"]*data["exchange"]+1900)*1.02 + 900);
+                        results[i]["start_price"] =  Math.round((results[i]["start_price"]*ex+1900)*1.02 + 900);
                     }
                     resolve(results);
                 })
@@ -130,7 +127,7 @@ class DbService {
                 connection.query(query, [name,limit*page], (err, results) => {
                     if (err) reject(new Error(err.message));
                     for(let i = 0; i < results.length; i++){
-                        results[i]["start_price"] =  Math.round((results[i]["start_price"]*data["exchange"]+1900)*1.02 + 900);
+                        results[i]["start_price"] =  Math.round((results[i]["start_price"]*ex+1900)*1.02 + 900);
                     }
                     resolve(results);
                 })
@@ -150,7 +147,7 @@ class DbService {
                 connection.query(query, [limit*page], (err, results) => {
                     if (err) reject(new Error(err.message));
                     for(let i = 0; i < results.length; i++){
-                        results[i]["start_price"] =  Math.round((results[i]["start_price"]*data["exchange"]+1900)*1.02 + 900);
+                        results[i]["start_price"] =  Math.round((results[i]["start_price"]*ex+1900)*1.02 + 900);
                     }
                     resolve(results);
                 })
