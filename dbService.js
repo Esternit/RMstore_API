@@ -45,7 +45,7 @@ class DbService {
                 connection.query(query, [(page-1)*limit,limit], (err, results) => {
                     if (err) reject(new Error(err.message));
                     for(let i = 0; i < results.length; i++){
-                        results[i]["start_price"] =  Math.round((results[i]["start_price"]*data["exchange"]+1900)*1.02 + 900);
+                        results[i]["start_price"] =  Math.round((results[i]["start_price"]*ex+1900)*1.02 + 900);
                     }
                     resolve(results);
                 })
