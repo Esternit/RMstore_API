@@ -25,7 +25,6 @@ var ex;
 connection.query(
     'SELECT * FROM exchange',
     function(err, results, fields) {
-      console.log(results[0]["exchange_rate"]);
       ex = results["exchange_rate"]; // results contains rows returned by server// fields contains extra meta data about results, if available
     }
 );
@@ -41,7 +40,6 @@ class DbService {
             const response = await new Promise((resolve, reject) => {
                 const query = "SELECT * FROM products LIMIT ?,?;";
                 
-                ex=parseFloat(ex);
                 console.log(ex);
                 connection.query(query, [(page-1)*limit,limit], (err, results) => {
                     if (err) reject(new Error(err.message));
