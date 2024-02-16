@@ -26,7 +26,7 @@ connection.query(
     'SELECT * FROM exchange',
     function(err, results, fields) {
       console.log(results["exchange_rate"]);
-      console.log(results[0]);
+      console.log(results[0]["exchange_rate"]);
       ex = results["exchange_rate"] // results contains rows returned by server// fields contains extra meta data about results, if available
     }
 );
