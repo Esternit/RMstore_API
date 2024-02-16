@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const dotenv = require('dotenv');
+const fs = require("fs");
 dotenv.config();
 
 const dbService = require('./dbService');
@@ -53,6 +54,20 @@ app.post('/search/:name', (request, response) => {
     result
     .then(data => response.json({data : data}))
     .catch(err => console.log(err));
+})
+
+app.post('/newExchange/:name', (request, response) => {
+    console.log('here');
+    const { name } = request.params;
+    if(',' in name){
+        name=parseFloat(name.replace(",", "."));
+    }
+    else{
+        name=parseFloat(name);
+    }
+    let data = JSON.parse(fs.readFileSync('data.json'));
+    data["exchange"]=name;
+    fs.writeFile('data.json',data, 'utf8');
 })
 
 app.post('/searchDataFromStart/:name', (request, response) => {

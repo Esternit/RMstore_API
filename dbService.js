@@ -70,7 +70,6 @@ class DbService {
                     for(let i = 0; i < results.length; i++){
                         results[i]["price"] =  Math.round((results[i]["price"]*data["exchange"]+1900)*1.02 + 900);
                     }
-                    console.log(results);
                     resolve(results);
                 })
             });
