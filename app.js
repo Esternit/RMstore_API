@@ -58,7 +58,7 @@ app.post('/search/:name', (request, response) => {
 
 app.post('/newExchange/:name', (request, response) => {
     console.log('here');
-    const { name } = request.params;
+    let { name } = request.params;
     if(name.includes(',')){
         name=parseFloat(name.replace(",", "."));
     }
