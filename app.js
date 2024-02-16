@@ -67,7 +67,7 @@ app.post('/newExchange/:name', (request, response) => {
     }
     let data = JSON.parse(fs.readFileSync('data.json'));
     data["exchange"]=name;
-    fs.writeFileSync("data.json", JSON.stringify(data));
+    fs.writeFileSync("data.json", data);
     response.send("<h2>Курс обновлён</h2>");
 })
 
