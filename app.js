@@ -68,6 +68,7 @@ app.post('/newExchange/:name', (request, response) => {
     let data = JSON.parse(fs.readFileSync('data.json'));
     data["exchange"]=name;
     fs.writeFile('data.json',data, 'utf8');
+    response.send("<h2>Курс обновлён</h2>");
 })
 
 app.post('/searchDataFromStart/:name', (request, response) => {
