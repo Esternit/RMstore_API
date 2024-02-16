@@ -21,14 +21,16 @@ connection.getConnection((err) => {
         console.log(err);
     }
 });
+var ex;
 connection.query(
     'SELECT * FROM exchange',
     function(err, results, fields) {
-      console.log(results); // results contains rows returned by server
-      console.log(fields); // fields contains extra meta data about results, if available
+      console.log(results["exchange_rate"]);
+      ex = results["exchange_rate"] // results contains rows returned by server// fields contains extra meta data about results, if available
     }
-  );
+);
 
+console.log(ex);
 class DbService {
     static getDbServiceInstance() {
         return instance ? instance : new DbService();
