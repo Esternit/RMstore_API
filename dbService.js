@@ -15,11 +15,19 @@ const connection = mysql.createPool({
     port: process.env.DB_PORT
 });
 
+
 connection.getConnection((err) => {
     if (err){
         console.log(err);
     }
 });
+connection.query(
+    'SELECT * FROM `exchange',
+    function(err, results, fields) {
+      console.log(results); // results contains rows returned by server
+      console.log(fields); // fields contains extra meta data about results, if available
+    }
+  );
 
 class DbService {
     static getDbServiceInstance() {
