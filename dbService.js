@@ -22,7 +22,7 @@ connection.getConnection((err) => {
     }
 });
 connection.query(
-    'SELECT * FROM `exchange',
+    'SELECT * FROM exchange',
     function(err, results, fields) {
       console.log(results); // results contains rows returned by server
       console.log(fields); // fields contains extra meta data about results, if available
