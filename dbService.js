@@ -45,6 +45,7 @@ class DbService {
                     if (err) reject(new Error(err.message));
                     for(let i = 0; i < results.length; i++){
                         results[i]["start_price"] =  Math.round((results[i]["start_price"]*ex+1900)*1.02 + 900);
+                        console.log(results[i]["start_price"]);
                     }
                     resolve(results);
                 })
