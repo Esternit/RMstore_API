@@ -25,13 +25,12 @@ var ex;
 connection.query(
     'SELECT * FROM exchange',
     function(err, results, fields) {
-      console.log(results["exchange_rate"]);
       console.log(results[0]["exchange_rate"]);
-      ex = results["exchange_rate"] // results contains rows returned by server// fields contains extra meta data about results, if available
+      ex = results["exchange_rate"]; // results contains rows returned by server// fields contains extra meta data about results, if available
     }
 );
 
-console.log(ex);
+
 class DbService {
     static getDbServiceInstance() {
         return instance ? instance : new DbService();
@@ -41,7 +40,7 @@ class DbService {
         try {
             const response = await new Promise((resolve, reject) => {
                 const query = "SELECT * FROM products LIMIT ?,?;";
-
+                console.log(ex);
                 connection.query(query, [(page-1)*limit,limit], (err, results) => {
                     if (err) reject(new Error(err.message));
                     for(let i = 0; i < results.length; i++){
