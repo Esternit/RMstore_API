@@ -66,6 +66,7 @@ app.post('/newExchange/:name', (request, response) => {
         name=parseFloat(name);
     }
     let data = JSON.parse(fs.readFileSync('data.json'));
+    console.log(data);
     data["exchange"]=name;
     fs.writeFileSync("data.json", data);
     response.send("<h2>Курс обновлён</h2>");
