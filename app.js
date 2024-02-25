@@ -6,6 +6,7 @@ const fs = require("fs");
 dotenv.config();
 
 const dbService = require('./dbService');
+const dbServiceLoggi = require('./dbserviceloggi');
 
 app.use(cors());
 app.use(express.json());
@@ -14,7 +15,15 @@ app.use(express.urlencoded({ extended : false }));
 app.post('/getById', (request, response) => {
     
     const  id  = request.body['productId'];
-    const db = dbService.getDbServiceInstance();
+    const store = request.body['store'];
+    var db;
+    if(store == "RM"){
+        db = dbService.getDbServiceInstance();
+    }
+    else{
+        db = dbServiceLoggi.getDbServiceInstance();
+    }
+    
 
     const result = db.getDataById(id);
     result
@@ -26,7 +35,14 @@ app.post('/getAllDataFromStart', (request, response) => {
     
     const limit = request.body['limiter'];
     const page = request.body['paging'];
-    const db = dbService.getDbServiceInstance();
+    const store = request.body['store'];
+    var db;
+    if(store == "RM"){
+        db = dbService.getDbServiceInstance();
+    }
+    else{
+        db = dbServiceLoggi.getDbServiceInstance();
+    }
 
     const result = db.getAllDataFromStart(limit,page);
     result
@@ -38,7 +54,14 @@ app.post('/getAll', (request, response) => {
     const limit = request.body['limiter'];
     const page = request.body['paging'];
 
-    const db = dbService.getDbServiceInstance();
+    const store = request.body['store'];
+    var db;
+    if(store == "RM"){
+        db = dbService.getDbServiceInstance();
+    }
+    else{
+        db = dbServiceLoggi.getDbServiceInstance();
+    }
     const result = db.getAllData(limit,page);
     result
     .then(data => response.json({data : data}))
@@ -49,7 +72,14 @@ app.post('/search/:name', (request, response) => {
     const { name } = request.params;
     const limit = request.body['limiter'];
     const page = request.body['paging'];
-    const db = dbService.getDbServiceInstance();
+    const store = request.body['store'];
+    var db;
+    if(store == "RM"){
+        db = dbService.getDbServiceInstance();
+    }
+    else{
+        db = dbServiceLoggi.getDbServiceInstance();
+    }
     const result = db.searchByName(name,limit,page);
     result
     .then(data => response.json({data : data}))
@@ -76,7 +106,14 @@ app.post('/searchDataFromStart/:name', (request, response) => {
     const { name } = request.params;
     const limit = request.body['limiter'];
     const page = request.body['paging'];
-    const db = dbService.getDbServiceInstance();
+    const store = request.body['store'];
+    var db;
+    if(store == "RM"){
+        db = dbService.getDbServiceInstance();
+    }
+    else{
+        db = dbServiceLoggi.getDbServiceInstance();
+    }
     const result = db.searchByNameFromStart(name,limit,page);
     result
     .then(data => response.json({data : data}))
