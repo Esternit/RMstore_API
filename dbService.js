@@ -46,7 +46,9 @@ class DbService {
                     if (err) reject(new Error(err.message));
                     for(let i = 0; i < results.length; i++){
                         if(store == "RM"){
+                            console.log(store);
                             results[i]["start_price"] =  Math.round((results[i]["start_price"]*RMex+1900)*1.02 + 900);
+                            console.log(results[i]["start_price"]);
                         }
                         else if(store == "Loggi"){
                             results[i]["start_price"] =  Math.round((results[i]["start_price"]*Loggiex+2000)*1.02 + 700);
