@@ -14,9 +14,10 @@ app.use(express.urlencoded({ extended : false }));
 app.post('/getById', (request, response) => {
     
     const  id  = request.body['productId'];
+    const store  = request.body["store"];
     const db = dbService.getDbServiceInstance();
 
-    const result = db.getDataById(id);
+    const result = db.getDataById(id,store);
     result
     .then(data => response.json({ data : data}))
     .catch(err => console.log(err));
@@ -26,9 +27,10 @@ app.post('/getAllDataFromStart', (request, response) => {
     
     const limit = request.body['limiter'];
     const page = request.body['paging'];
+    const store  = request.body["store"];
     const db = dbService.getDbServiceInstance();
 
-    const result = db.getAllDataFromStart(limit,page);
+    const result = db.getAllDataFromStart(limit,page,store);
     result
     .then(data => response.json({ data : data}))
     .catch(err => console.log(err));
@@ -37,9 +39,9 @@ app.post('/getAllDataFromStart', (request, response) => {
 app.post('/getAll', (request, response) => {
     const limit = request.body['limiter'];
     const page = request.body['paging'];
-
+    const store  = request.body["store"];
     const db = dbService.getDbServiceInstance();
-    const result = db.getAllData(limit,page);
+    const result = db.getAllData(limit,page,store);
     result
     .then(data => response.json({data : data}))
     .catch(err => console.log(err));
@@ -49,8 +51,9 @@ app.post('/search/:name', (request, response) => {
     const { name } = request.params;
     const limit = request.body['limiter'];
     const page = request.body['paging'];
+    const store  = request.body["store"];
     const db = dbService.getDbServiceInstance();
-    const result = db.searchByName(name,limit,page);
+    const result = db.searchByName(name,limit,page,store);
     result
     .then(data => response.json({data : data}))
     .catch(err => console.log(err));
@@ -76,8 +79,9 @@ app.post('/searchDataFromStart/:name', (request, response) => {
     const { name } = request.params;
     const limit = request.body['limiter'];
     const page = request.body['paging'];
+    const store  = request.body["store"];
     const db = dbService.getDbServiceInstance();
-    const result = db.searchByNameFromStart(name,limit,page);
+    const result = db.searchByNameFromStart(name,limit,page,store);
     result
     .then(data => response.json({data : data}))
     .catch(err => console.log(err));
