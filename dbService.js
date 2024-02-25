@@ -21,14 +21,12 @@ connection.getConnection((err) => {
         console.log(err);
     }
 });
-var RMex;
-var Loggiex;
+var ex;
 connection.query(
     'SELECT * FROM exchange',
     function(err, results, fields) {
-      RMex = results[0]["exchange_rate"];
-      Loggiex = results[1]["exchange_rate"];
-      console.log(RMex); // results contains rows returned by server// fields contains extra meta data about results, if available
+      ex = results[0]["exchange_rate"];
+      console.log(ex); // results contains rows returned by server// fields contains extra meta data about results, if available
     }
 );
 
@@ -38,22 +36,14 @@ class DbService {
         return instance ? instance : new DbService();
     }
 
-    async getAllData(limit,page,store){
+    async getAllData(limit,page){
         try {
             const response = await new Promise((resolve, reject) => {
                 const query = "SELECT * FROM products LIMIT ?,?;";
                 connection.query(query, [(page-1)*limit,limit], (err, results) => {
                     if (err) reject(new Error(err.message));
                     for(let i = 0; i < results.length; i++){
-                        if(store == "RM"){
-                            console.log(store);
-                            results[i]["start_price"] =  Math.round((results[i]["start_price"]*RMex+1900)*1.02 + 900);
-                            console.log(results[i]["start_price"]);
-                        }
-                        else if(store == "Loggi"){
-                            results[i]["start_price"] =  Math.round((results[i]["start_price"]*Loggiex+2000)*1.02 + 700);
-                        }
-                        
+                        results[i]["start_price"] =  Math.round((results[i]["start_price"]*ex+1900)*1.02 + 900);
                     }
                     resolve(results);
                 })
@@ -66,7 +56,7 @@ class DbService {
         }
     }
 
-    async getDataById(id,store){
+    async getDataById(id){
         try{
             const response = await new Promise((resolve, reject) => {
                 const query = "SELECT * FROM products WHERE spuId = ?;";
@@ -74,13 +64,7 @@ class DbService {
                 connection.query(query, [id], (err, results) => {
                     if (err) reject(new Error(err.message));
                     for(let i = 0; i < results.length; i++){
-                        if(store == "RM"){
-                            results[i]["start_price"] =  Math.round((results[i]["start_price"]*RMex+1900)*1.02 + 900);
-                        }
-                        else if(store == "Loggi"){
-                            results[i]["start_price"] =  Math.round((results[i]["start_price"]*Loggiex+2000)*1.02 + 700);
-                        }
-
+                        results[i]["start_price"] =  Math.round((results[i]["start_price"]*ex+1900)*1.02 + 900);
                     }
                     
                     resolve(results);
@@ -92,12 +76,7 @@ class DbService {
                 connection.query(query, [id], (err, results) => {
                     if (err) reject(new Error(err.message));
                     for(let i = 0; i < results.length; i++){
-                        if(store == "RM"){
-                            results[i]["price"] =  Math.round((results[i]["price"]*RMex+1900)*1.02 + 900);
-                        }
-                        else if(store == "Loggi"){
-                            results[i]["price"] =  Math.round((results[i]["price"]*Loggiex+2000)*1.02 + 700);
-                        }
+                        results[i]["price"] =  Math.round((results[i]["price"]*ex+1900)*1.02 + 900);
                     }
                     resolve(results);
                 })
@@ -121,7 +100,7 @@ class DbService {
 
     }
 
-    async searchByName(name,limit,page,store) {
+    async searchByName(name,limit,page) {
         try {
             const response = await new Promise((resolve, reject) => {
                 const query = "SELECT * FROM products WHERE title LIKE CONCAT('%', ? , '%') LIMIT ?,?;";
@@ -129,12 +108,7 @@ class DbService {
                 connection.query(query, [name,(page-1)*limit,limit], (err, results) => {
                     if (err) reject(new Error(err.message));
                     for(let i = 0; i < results.length; i++){
-                        if(store == "RM"){
-                            results[i]["start_price"] =  Math.round((results[i]["start_price"]*RMex+1900)*1.02 + 900);
-                        }
-                        else if(store == "Loggi"){
-                            results[i]["start_price"] =  Math.round((results[i]["start_price"]*Loggiex+2000)*1.02 + 700);
-                        }
+                        results[i]["start_price"] =  Math.round((results[i]["start_price"]*ex+1900)*1.02 + 900);
                     }
                     resolve(results);
                 })
@@ -146,7 +120,7 @@ class DbService {
         }
     }
 
-    async searchByNameFromStart(name,limit,page,store) {
+    async searchByNameFromStart(name,limit,page) {
         try {
             const response = await new Promise((resolve, reject) => {
                 const query = "SELECT * FROM products WHERE title LIKE CONCAT('%', ? , '%') LIMIT ?;";
@@ -154,12 +128,7 @@ class DbService {
                 connection.query(query, [name,limit*page], (err, results) => {
                     if (err) reject(new Error(err.message));
                     for(let i = 0; i < results.length; i++){
-                        if(store == "RM"){
-                            results[i]["start_price"] =  Math.round((results[i]["start_price"]*RMex+1900)*1.02 + 900);
-                        }
-                        else if(store == "Loggi"){
-                            results[i]["start_price"] =  Math.round((results[i]["start_price"]*Loggiex+2000)*1.02 + 700);
-                        }
+                        results[i]["start_price"] =  Math.round((results[i]["start_price"]*ex+1900)*1.02 + 900);
                     }
                     resolve(results);
                 })
@@ -171,7 +140,7 @@ class DbService {
         }
     }
 
-    async getAllDataFromStart(limit,page,store){
+    async getAllDataFromStart(limit,page){
         try {
             const response = await new Promise((resolve, reject) => {
                 const query = "SELECT * FROM products LIMIT ?;";
@@ -179,12 +148,7 @@ class DbService {
                 connection.query(query, [limit*page], (err, results) => {
                     if (err) reject(new Error(err.message));
                     for(let i = 0; i < results.length; i++){
-                        if(store == "RM"){
-                            results[i]["start_price"] =  Math.round((results[i]["start_price"]*RMex+1900)*1.02 + 900);
-                        }
-                        else if(store == "Loggi"){
-                            results[i]["start_price"] =  Math.round((results[i]["start_price"]*Loggiex+2000)*1.02 + 700);
-                        }
+                        results[i]["start_price"] =  Math.round((results[i]["start_price"]*ex+1900)*1.02 + 900);
                     }
                     resolve(results);
                 })
