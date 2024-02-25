@@ -27,7 +27,7 @@ connection.query(
     'SELECT * FROM exchange',
     function(err, results, fields) {
       RMex = results[0]["exchange_rate"];
-      Loggiex = results[0]["exchange_rate"];
+      Loggiex = results[1]["exchange_rate"];
       console.log(RMex); // results contains rows returned by server// fields contains extra meta data about results, if available
     }
 );
