@@ -123,11 +123,34 @@ app.post('/searchDataFromStart/:name', (request, response) => {
 
 app.post('/sendMessage',(request, response) => {
     console.log(request.body);
-    let admin_chat = -1001845802930;
-    let text = "Наименование: " + request.body["title"] +"%0AРазмер/цена: "+ request.body["size_name"] + "EU / " + request.body["pricing"] + "руб.";
-    let admin_text = "✅ Имя пользователя: " +request.body["user_first"]+ "%0A✅ Ссылка на пользователя: @" +request.body["user_name"]+ "%0AНаименование: " + request.body["title"] +"%0AРазмер/цена: "+ request.body["size_name"] + "EU / " + request.body["pricing"] + "руб.%0AАртикул: " +request.body["article"]+ "%0Ahttps://m.dewu.com/router/product/ProductDetail?spuId="+request.body["id"];
-    let url = "https://api.telegram.org/bot7004894962:AAG-lllNmtfEE6Abh2RbkqETVN6y9cMEUtA/sendPhoto?chat_id=" + request.body["user_id"].toString() + "&photo=" + request.body["img"] + "&caption=" + text;
-    let url_admin = "https://api.telegram.org/bot7004894962:AAG-lllNmtfEE6Abh2RbkqETVN6y9cMEUtA/sendPhoto?chat_id=" + admin_chat.toString() + "&photo=" + request.body["img"] + "&caption=" + admin_text;
+    var admin_chat;
+    var bot_id;
+    var admin_link;
+
+
+    if(request.body["store"] == "RM"){
+        admin_chat = -1002050701256;
+        bot_id = "6921027076:AAFQJTnEZQAyq7hOfpnXpwZouAFe5NNdu9o";
+        admin_link = "https://t.me/HKpozion";
+    }
+    else{
+        admin_chat = -1001845802930;
+        bot_id = "7128439871:AAHw0aghCksYQjPKQHcE9coc74e1vDi54yI";
+        admin_link = "https://t.me/workisthebest";
+    }
+    var text;
+    var admin_text;
+    if(request.body["user_name"].length == 0){
+        text = "Наименование: " + request.body["title"] +"%0AРазмер/цена: "+ request.body["size_name"] + "EU / " + request.body["pricing"] + "руб." + "Заказ создан, но так как у Вас отсутствует ник, мы не можем с вами связаться🙁 %0AПожалуйста, напишите менеджеру по ссылке ниже: %0A" + admin_link;
+        admin_text = "✅ Имя пользователя: " +request.body["user_first"]+ "✅%0A Ссылка на пользователя: отсутсвует -> пользователь напишет сам" + "%0AНаименование: " + request.body["title"] +"%0AРазмер/цена: "+ request.body["size_name"] + "EU / " + request.body["pricing"] + "руб.%0AАртикул: " +request.body["article"]+ "%0Ahttps://m.dewu.com/router/product/ProductDetail?spuId="+request.body["id"];
+    }
+    else{
+        text = "Наименование: " + request.body["title"] +"%0AРазмер/цена: "+ request.body["size_name"] + "EU / " + request.body["pricing"] + "руб.";
+        admin_text = "✅ Имя пользователя: " +request.body["user_first"]+ "✅%0A Ссылка на пользователя: @" +request.body["user_name"]+ "%0AНаименование: " + request.body["title"] +"%0AРазмер/цена: "+ request.body["size_name"] + "EU / " + request.body["pricing"] + "руб.%0AАртикул: " +request.body["article"]+ "%0Ahttps://m.dewu.com/router/product/ProductDetail?spuId="+request.body["id"];
+    }
+    
+    let url = "https://api.telegram.org/bot" + bot_id+ "/sendPhoto?chat_id=" + request.body["user_id"].toString() + "&photo=" + request.body["img"] + "&caption=" + text;
+    let url_admin = "https://api.telegram.org/bot" + bot_id+ "/sendPhoto?chat_id=" + admin_chat.toString() + "&photo=" + request.body["img"] + "&caption=" + admin_text;
     console.log(url_admin);
     console.log(url);
     https
