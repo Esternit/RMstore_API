@@ -123,7 +123,8 @@ app.post('/searchDataFromStart/:name', (request, response) => {
 
 app.post('/sendMessage',(request, response) => {
     console.log(request.body);
-    let url = "https://api.telegram.org/bot7004894962:AAG-lllNmtfEE6Abh2RbkqETVN6y9cMEUtA/sendMessage?chat_id=" + request.body["user_id"].toString() + "&photo=" + request.body["img"] + "&caption=" + request.body["title"];
+    let url = "https://api.telegram.org/bot7004894962:AAG-lllNmtfEE6Abh2RbkqETVN6y9cMEUtA/sendPhoto?chat_id=" + request.body["user_id"].toString() + "&photo=" + request.body["img"] + "&caption=" + request.body["title"];
+    console.log(url);
     https
     .get(url, (res) => {
         console.log('statusCode:', res.statusCode);
