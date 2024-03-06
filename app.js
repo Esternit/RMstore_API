@@ -123,11 +123,23 @@ app.post('/searchDataFromStart/:name', (request, response) => {
 
 app.post('/sendMessage',(request, response) => {
     console.log(request.body);
+    let admin_chat = -1001845802930;
     let text = "Наименование: " + request.body["title"] +"%0AРазмер/цена: "+ request.body["size_name"] + "EU / " + request.body["pricing"] + "руб.";
+    let admin_text = "✅ Имя пользователя: " +request.body["user_first"]+ "%0A✅ Ссылка на пользователя: @" +request.body["user_name"]+ "%0AНаименование: " + request.body["title"] +"%0AРазмер/цена: "+ request.body["size_name"] + "EU / " + request.body["pricing"] + "руб.%0AАртикул: " +request.body["article"]+ "%0Ahttps://m.dewu.com/router/product/ProductDetail?spuId="+request.body["id"];
     let url = "https://api.telegram.org/bot7004894962:AAG-lllNmtfEE6Abh2RbkqETVN6y9cMEUtA/sendPhoto?chat_id=" + request.body["user_id"].toString() + "&photo=" + request.body["img"] + "&caption=" + text;
+    let url_admin = "https://api.telegram.org/bot7004894962:AAG-lllNmtfEE6Abh2RbkqETVN6y9cMEUtA/sendPhoto?chat_id=" + admin_chat.toString() + "&photo=" + request.body["img"] + "&caption=" + text;
+    console.log(url_admin);
     console.log(url);
     https
     .get(url, (res) => {
+        console.log('statusCode:', res.statusCode);
+        console.log('headers:', res.headers);
+    })
+    .on('error', (e) => {
+        console.error(e);
+    });
+    https
+    .get(url_admin, (res) => {
         console.log('statusCode:', res.statusCode);
         console.log('headers:', res.headers);
     })
