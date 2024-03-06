@@ -3,6 +3,7 @@ const app = express();
 const cors = require('cors');
 const dotenv = require('dotenv');
 const fs = require("fs");
+const https = require('node:https');
 dotenv.config();
 
 const dbService = require('./dbService');
@@ -122,6 +123,15 @@ app.post('/searchDataFromStart/:name', (request, response) => {
 
 app.post('/sendMessage',(request, response) => {
     console.log(request.body);
+    let url = "https://api.telegram.org/bot7004894962:AAG-lllNmtfEE6Abh2RbkqETVN6y9cMEUtA/sendMessage?chat_id=" + request.body["user_id"].toString() + "&photo=" + request.body["img"] + "&caption=" + request.body["title"];
+    https
+    .get(url, (res) => {
+        console.log('statusCode:', res.statusCode);
+        console.log('headers:', res.headers);
+    })
+    .on('error', (e) => {
+        console.error(e);
+    });
 })
 
 app.listen(process.env.PORT, () => console.log('app is running'));
