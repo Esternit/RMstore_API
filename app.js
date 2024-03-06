@@ -120,4 +120,8 @@ app.post('/searchDataFromStart/:name', (request, response) => {
     .catch(err => console.log(err));
 })
 
+app.post('/sendMessage',(request, response) => {
+    console.log(request.body);
+})
+
 app.listen(process.env.PORT, () => console.log('app is running'));
