@@ -172,3 +172,5 @@ app.post('/sendMessage',(request, response) => {
 })
 
 app.listen(process.env.PORT, () => console.log('app is running'));
+
+module.exports = app;
