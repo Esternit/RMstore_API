@@ -133,6 +133,11 @@ app.post('/sendMessage',(request, response) => {
         bot_id = "6921027076:AAFQJTnEZQAyq7hOfpnXpwZouAFe5NNdu9o";
         admin_link = "https://t.me/HKpozion";
     }
+    else if(request.body["store"] == "DelaemVeshi"){
+        admin_chat = -1002143297327;
+        bot_id = "7056819916:AAH1_6rWIA-PhXhqNXAoZYLA_x4b3agLTHA";
+        admin_link = "https://t.me/workisthebest";
+    }
     else{
         admin_chat = -1001845802930;
         bot_id = "7128439871:AAHw0aghCksYQjPKQHcE9coc74e1vDi54yI";
